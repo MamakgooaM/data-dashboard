@@ -8,6 +8,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import type { Router, Navigation } from "@toolpad/core";
+import DemographicsScatterChart from "../charts/demographics/demographics";
 
 const NAVIGATION: Navigation = [
   {
@@ -32,13 +33,13 @@ const NAVIGATION: Navigation = [
     icon: <BarChartIcon />,
     children: [
       {
-        segment: "sales",
-        title: "Sales",
+        segment: "population",
+        title: "Population",
         icon: <DescriptionIcon />,
       },
       {
-        segment: "traffic",
-        title: "Traffic",
+        segment: "demographics",
+        title: "Demographics",
         icon: <DescriptionIcon />,
       },
     ],
@@ -62,6 +63,12 @@ const demoTheme = createTheme({
 });
 
 function DemoPageContent({ pathname }: { pathname: string }) {
+  let content;
+
+  if (pathname.includes("demographics")) {
+    content = <DemographicsScatterChart/>
+  }
+
   return (
     <Box
       sx={{
@@ -72,7 +79,7 @@ function DemoPageContent({ pathname }: { pathname: string }) {
         textAlign: "center",
       }}
     >
-      <Typography>Dashboard content for {pathname}</Typography>
+      {content}
     </Box>
   );
 }
@@ -100,6 +107,10 @@ export default function DashboardLayoutBasic(props: DemoProps) {
 
   // Remove this const when copying and pasting into your project.
   const demoWindow = window !== undefined ? window() : undefined;
+
+  if (pathname.includes("demographics")) {
+    <DemographicsScatterChart/>
+  }
 
   return (
     // preview-start
